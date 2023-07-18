@@ -1,6 +1,8 @@
 package yape.dao;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 /**
@@ -20,6 +22,14 @@ public class dao {
                 evt.consume();
             }
         }
+    }
 
+    public static void cambiarColorSeparador(JSeparator separador, String codigoColor) {
+        try {
+            Color color = Color.decode(codigoColor);
+            separador.setForeground(color);
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR: " + e.getMessage());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package yape.from;
 
 import java.awt.Toolkit;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import yape.dao.FechaHora;
 import yape.dao.dao;
@@ -16,7 +17,7 @@ public class RellenarDatos extends javax.swing.JFrame {
     public static int celular;
     public static String destino;
     public static String fecha;
-
+    public static String mont;
     public RellenarDatos() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -111,7 +112,15 @@ public class RellenarDatos extends javax.swing.JFrame {
             if (txtCelular.getText().length() == 9 && Double.parseDouble(txtMonto.getText()) <= 500) {
                 try {
                     nombre = txtNombre.getText();
-                    monto = Double.parseDouble(txtMonto.getText());
+                    try {
+                        String montoString = String.format(txtMonto.getText(), "2%,f").replace(",", ".");
+                        monto = Double.parseDouble(montoString);
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        montoString = df.format(monto);
+                        mont = (montoString).replace(",", ".");
+                    } catch (NumberFormatException e) {
+                        System.out.println("ERROR: " + e.getMessage());
+                    }
                     destino = (String) txtDestino.getSelectedItem();
                     celular = Integer.parseInt(txtCelular.getText());
                 } catch (NumberFormatException e) {
@@ -123,7 +132,7 @@ public class RellenarDatos extends javax.swing.JFrame {
                 hora = FechaHora.getHora();
                 mes = FechaHora.getDiaSemana();
                 fecha = dia + " " + mes + ". " + año + " - " + hora;
-                principal abrir = new principal();
+                Captura abrir = new Captura();
                 abrir.setVisible(true);
                 this.hide();
             } else {
@@ -166,7 +175,7 @@ public class RellenarDatos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RellenarDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
